@@ -305,9 +305,9 @@ class JdSeckill(object):
         二维码登陆
         :return:
         """
-        if self.qrlogin.is_login:
-            logger.info('登录成功')
-            return
+        # if self.qrlogin.is_login:
+        #     logger.info('登录成功')
+        #     return
 
         self.qrlogin.login_by_qrcode()
 
@@ -324,9 +324,9 @@ class JdSeckill(object):
 
         @functools.wraps(func)
         def new_func(self, *args, **kwargs):
-            if not self.qrlogin.is_login:
-                logger.info("{0} 需登陆后调用，开始扫码登陆".format(func.__name__))
-                self.login_by_qrcode()
+       #     if not self.qrlogin.is_login:
+            logger.info("{0} 需登陆后调用，开始扫码登陆".format(func.__name__))
+            self.login_by_qrcode()
             return func(self, *args, **kwargs)
 
         return new_func
@@ -616,7 +616,8 @@ class JdSeckill(object):
         try:
             resp_json = parse_json(resp.text)
         except Exception as e:
-            logger.info('抢购失败，返回信息:{}'.format(resp.text[0: 128]))
+            logger.info('抢购失败，返回信息:{}'.format(resp.text))
+
             return False
         # 返回信息
         # 抢购失败：
